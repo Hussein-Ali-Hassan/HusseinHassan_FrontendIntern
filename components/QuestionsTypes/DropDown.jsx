@@ -1,11 +1,21 @@
+import { Select } from "@chakra-ui/react";
+
 const types = ["Single Choice", "Multiple Choice", "Paragraph"];
 
-export default function QuestionsTypes({ setType }) {
+export default function QuestionsTypes({ type, handleTypeChange }) {
   return (
-    <select onChange={(e) => setType(e.target.value)}>
+    <Select
+      onChange={(e) => handleTypeChange(e.target.value)}
+      defaultValue={type}
+      variant="filled"
+      colorScheme="brand"
+      bg="brand.700"
+    >
       {types.map((type) => (
-        <option value={type}>{type}</option>
+        <option key={type} value={type}>
+          {type}
+        </option>
       ))}
-    </select>
+    </Select>
   );
 }

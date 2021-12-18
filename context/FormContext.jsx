@@ -1,31 +1,76 @@
 import { createContext, useState, useContext } from "react";
-import { v4 as uuidv4 } from "uuid";
 
 const FormContext = createContext();
 
 export const FormProvider = ({ children }) => {
-  const [questions, setQuestions] = useState([
+  // initialy we start with one section and one 'single choice' question
+  const [sections, setSections] = useState([
     {
-      id: uuidv4(),
-      data: [
+      questions: [
         {
-          name: "",
-          price: "",
+          type: "Single Choice",
+          positiveMarks: 0,
+          negativeMarks: 0,
         },
       ],
     },
   ]);
 
-  const handleQuestionDataChange = (index, data) => {
-    const newQuestions = [...questions];
-    newQuestions[index].data = data;
+  const handleSectionQuestionsChange = (sectionIndex, newQuestions) => {
+    const newSections = [...sections];
+    newSections[sectionIndex].questions = newQuestions;
 
-    setQuestions(newQuestions);
+    setSections(newSections);
+  };
+
+  const handleQuestionTypeChange = (sectionIndex, questionIndex, newType) => {
+    const newSections = [...sections];
+    newSections[sectionIndex].questions[questionIndex].type = newType;
+
+    // when switching question type;
+    // remove options property if it exists
+    newSections[sectionIndex].questions[questionIndex].options &&
+      delete newSections[sectionIndex].questions[questionIndex].options;
+
+    setSections(newSections);
+  };
+
+  const handleQuestionMarksChange = (
+    sectionIndex,
+    questionIndex,
+    positiveMarks,
+    negativeMarks
+  ) => {
+    const newSections = [...sections];
+    newSections[sectionIndex].questions[questionIndex].positiveMarks =
+      positiveMarks;
+    newSections[sectionIndex].questions[questionIndex].negativeMarks =
+      negativeMarks;
+
+    setSections(newSections);
+  };
+
+  const handleSingleAndMultipleChoiceQuestionChange = (
+    sectionIndex,
+    questionIndex,
+    options
+  ) => {
+    const newSections = [...sections];
+    newSections[sectionIndex].questions[questionIndex].options = options;
+
+    setSections(newSections);
   };
 
   return (
     <FormContext.Provider
-      value={{ questions, setQuestions, handleQuestionDataChange }}
+      value={{
+        sections,
+        setSections,
+        handleSectionQuestionsChange,
+        handleQuestionTypeChange,
+        handleSingleAndMultipleChoiceQuestionChange,
+        handleQuestionMarksChange,
+      }}
     >
       {children}
     </FormContext.Provider>
@@ -35,31 +80,3 @@ export const FormProvider = ({ children }) => {
 export default function useFormContext() {
   return useContext(FormContext);
 }
-
-const example = [
-  {
-    id: "12-212", // section id
-    questions: [
-      {
-        id: "e3-3e3", // each question in the section
-        type: "single choice",
-        options: [1, 2, 3, 4],
-      },
-      {
-        id: "r5-t65",
-        type: "multiple choice",
-        options: [1, 2, 3, 4, 5],
-      },
-      {
-        id: "5t-88u",
-        type: "paragraph",
-        content: "",
-      },
-      {
-        id: "t5t-5t",
-        type: "file upload",
-        file: "",
-      },
-    ],
-  },
-];
