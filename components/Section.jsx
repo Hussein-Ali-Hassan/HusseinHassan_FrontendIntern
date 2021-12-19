@@ -19,8 +19,8 @@ export default function Section({
     newQuestions.push({
       type: "Single Choice",
       questionPrompt: "",
-      positiveMarks: 0,
-      negativeMarks: 0,
+      positiveMarks: null,
+      negativeMarks: null,
     });
 
     handleSectionQuestionsChange(sectionIndex, newQuestions);
