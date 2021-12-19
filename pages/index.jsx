@@ -21,8 +21,9 @@ export default function Home() {
       questions: [
         {
           type: "Single Choice",
-          positiveMarks: 0,
-          negativeMarks: 0,
+          questionPrompt: "",
+          positiveMarks: null,
+          negativeMarks: null,
         },
       ],
     });
@@ -66,8 +67,9 @@ export default function Home() {
                   questions: [
                     {
                       type: "Single Choice",
-                      positiveMarks: 0,
-                      negativeMarks: 0,
+                      questionPrompt: "",
+                      positiveMarks: null,
+                      negativeMarks: null,
                     },
                   ],
                 },

@@ -11,14 +11,15 @@ import {
 
 import useFormContext from "context/FormContext";
 import DropDown from "./DropDown";
-import SingleChoice from "./SingleChoice";
-import MultipleChoice from "./MultipleChoice";
-import Paragraph from "./Paragraph";
+import SingleChoice from "./Questions/SingleChoice";
+import MultipleChoice from "./Questions/MultipleChoice";
+import Paragraph from "./Questions/Paragraph";
 
 export default function QuestionCard({
   sectionIndex,
   questionIndex,
   type,
+  questionPrompt,
   positiveMarks,
   negativeMarks,
   setFocusedQuestionIndex,
@@ -69,6 +70,7 @@ export default function QuestionCard({
                 ref={positiveMarksRef}
                 value={positiveMarks}
                 onChange={handleMarksChange}
+                placeholder="-"
               />
               <InputRightElement color="brand.300" mr="2.5">
                 marks
@@ -86,6 +88,7 @@ export default function QuestionCard({
                 ref={negativeMarksRef}
                 value={negativeMarks}
                 onChange={handleMarksChange}
+                placeholder="-"
               />
               <InputRightElement color="brand.300" mr="2.5">
                 marks
@@ -100,17 +103,25 @@ export default function QuestionCard({
         </Box>
       </Box>
       <Box width="100%">
-        {type === "Paragraph" ? (
-          <Paragraph />
-        ) : type === "Single Choice" ? (
+        {type === "Paragraph" && (
+          <Paragraph
+            sectionIndex={sectionIndex}
+            questionIndex={questionIndex}
+            questionPrompt={questionPrompt}
+          />
+        )}
+        {type === "Single Choice" && (
           <SingleChoice
             sectionIndex={sectionIndex}
             questionIndex={questionIndex}
+            questionPrompt={questionPrompt}
           />
-        ) : (
+        )}
+        {type === "Multiple Choice" && (
           <MultipleChoice
             sectionIndex={sectionIndex}
             questionIndex={questionIndex}
+            questionPrompt={questionPrompt}
           />
         )}
       </Box>

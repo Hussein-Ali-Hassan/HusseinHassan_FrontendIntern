@@ -1,10 +1,10 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Flex, Input, InputGroup, InputRightElement } from "@chakra-ui/react";
 import { CloseIcon } from "@chakra-ui/icons";
 
 import useFormContext from "@/context/FormContext";
-import AddOption from "./common/AddOption";
-import QuestionInput from "./common/QuestionInput";
+import QuestionInput from "../common/QuestionInput";
+import AddOption from "../common/AddOption";
 
 const initialOptions = [
   {
@@ -13,9 +13,18 @@ const initialOptions = [
   },
 ];
 
-export default function MultipleChoice({ sectionIndex, questionIndex }) {
-  const { sections, handleSingleAndMultipleChoiceQuestionChange } =
-    useFormContext();
+export default function MultipleChoice({
+  sectionIndex,
+  questionIndex,
+  questionPrompt,
+}) {
+  const promptRef = useRef();
+
+  const {
+    sections,
+    handleSingleAndMultipleChoiceQuestionChange,
+    handleQuestionPromptChange,
+  } = useFormContext();
   // if exists -> use the options from the duplicated question
   // else -> stick to the initialOptions
   const [options, setOptions] = useState(
@@ -36,6 +45,12 @@ export default function MultipleChoice({ sectionIndex, questionIndex }) {
       questionIndex,
       newOptions
     );
+  };
+
+  const handlePromptChange = () => {
+    const prompt = promptRef.current.value;
+
+    handleQuestionPromptChange(sectionIndex, questionIndex, prompt);
   };
 
   const addNewOption = () => {
@@ -60,7 +75,11 @@ export default function MultipleChoice({ sectionIndex, questionIndex }) {
   return (
     <>
       <Flex flexDirection="column">
-        <QuestionInput />
+        <QuestionInput
+          questionPrompt={questionPrompt}
+          ref={promptRef}
+          handlePromptChange={handlePromptChange}
+        />
         {options.map((item, index) => (
           <Flex
             key={index}

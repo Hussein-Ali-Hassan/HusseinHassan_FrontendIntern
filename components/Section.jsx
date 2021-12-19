@@ -18,6 +18,7 @@ export default function Section({
 
     newQuestions.push({
       type: "Single Choice",
+      questionPrompt: "",
       positiveMarks: 0,
       negativeMarks: 0,
     });
@@ -43,11 +44,13 @@ export default function Section({
       question.type === "Paragraph"
         ? {
             type: question.type,
+            questionPrompt: question.questionPrompt,
             positiveMarks: question.positiveMarks,
             negativeMarks: question.negativeMarks,
           }
         : {
             type: question.type,
+            questionPrompt: question.questionPrompt,
             positiveMarks: question.positiveMarks,
             negativeMarks: question.negativeMarks,
             options: question.options
@@ -68,6 +71,7 @@ export default function Section({
             sectionIndex={sectionIndex}
             questionIndex={index}
             type={question.type}
+            questionPrompt={question.questionPrompt}
             positiveMarks={question.positiveMarks}
             negativeMarks={question.negativeMarks}
           />
