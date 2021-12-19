@@ -38,7 +38,7 @@ export default function Home() {
   };
 
   return (
-    <Box maxWidth="830px" mx="auto" py="10">
+    <Box maxWidth="830px" mx="auto" py="4rem">
       <Box mb="8">
         <Text fontSize="3xl">Create Questions</Text>
         <hr />
@@ -57,6 +57,25 @@ export default function Home() {
           </Box>
         ))}
         <Flex justifyContent="end">
+          <Button
+            variant="outline"
+            mr="4"
+            onClick={() =>
+              setSections([
+                {
+                  questions: [
+                    {
+                      type: "Single Choice",
+                      positiveMarks: 0,
+                      negativeMarks: 0,
+                    },
+                  ],
+                },
+              ])
+            }
+          >
+            Discard
+          </Button>
           <Button onClick={() => console.log(sections)}>Publish</Button>
         </Flex>
       </Box>
