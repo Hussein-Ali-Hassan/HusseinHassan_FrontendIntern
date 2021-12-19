@@ -1,11 +1,19 @@
 import { useRef } from "react";
-import { Box, Flex, Center, Divider, Spacer } from "@chakra-ui/react";
+import {
+  Box,
+  Flex,
+  Text,
+  Divider,
+  Input,
+  InputGroup,
+  InputRightElement,
+} from "@chakra-ui/react";
 
 import useFormContext from "context/FormContext";
-import DropDown from "./QuestionsTypes/DropDown";
-import SingleChoice from "./QuestionsTypes/SingleChoice";
-import MultipleChoice from "./QuestionsTypes/MultipleChoice";
-import Paragraph from "./QuestionsTypes/Paragraph";
+import DropDown from "./DropDown";
+import SingleChoice from "./SingleChoice";
+import MultipleChoice from "./MultipleChoice";
+import Paragraph from "./Paragraph";
 
 export default function QuestionCard({
   sectionIndex,
@@ -47,28 +55,42 @@ export default function QuestionCard({
     >
       <Flex flexDirection="column">
         <Box>
-          <Box mb="4">
+          <Box mb="6">
             <DropDown type={type} handleTypeChange={handleTypeChange} />
           </Box>
           <Flex flexDirection="column" mb="4">
-            <label>Total marks:</label>
-            <input
-              type="text"
-              ref={positiveMarksRef}
-              placeholder="Positive marks"
-              value={positiveMarks}
-              onChange={handleMarksChange}
-            />
+            <Text color="brand.900" mb="2">
+              Total marks:
+            </Text>
+            <InputGroup>
+              <Input
+                width="180px"
+                type="text"
+                ref={positiveMarksRef}
+                value={positiveMarks}
+                onChange={handleMarksChange}
+              />
+              <InputRightElement color="brand.300" mr="2.5">
+                marks
+              </InputRightElement>
+            </InputGroup>
           </Flex>
           <Flex flexDirection="column" mb="4">
-            <label>Negative marks:</label>
-            <input
-              type="text"
-              ref={negativeMarksRef}
-              placeholder="Negative marks"
-              value={negativeMarks}
-              onChange={handleMarksChange}
-            />
+            <Text color="brand.900" mb="2">
+              Negative marks:
+            </Text>
+            <InputGroup>
+              <Input
+                width="180px"
+                type="text"
+                ref={negativeMarksRef}
+                value={negativeMarks}
+                onChange={handleMarksChange}
+              />
+              <InputRightElement color="brand.300" mr="2.5">
+                marks
+              </InputRightElement>
+            </InputGroup>
           </Flex>
         </Box>
       </Flex>

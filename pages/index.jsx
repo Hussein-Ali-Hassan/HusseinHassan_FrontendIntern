@@ -1,4 +1,12 @@
-import { Box, Text, Flex, Divider, Button } from "@chakra-ui/react";
+import {
+  Box,
+  Text,
+  Checkbox,
+  Flex,
+  Input,
+  Divider,
+  Button,
+} from "@chakra-ui/react";
 
 import useFormContext from "@/context/FormContext";
 import Section from "@/components/Section";
@@ -7,7 +15,7 @@ export default function Home() {
   const { sections, setSections } = useFormContext();
 
   const addNewSection = () => {
-    const newSections = [...sections];
+    const newSections = JSON.parse(JSON.stringify(sections));
 
     newSections.push({
       questions: [
@@ -23,7 +31,7 @@ export default function Home() {
   };
 
   const deleteSection = (index) => {
-    const newSections = [...sections];
+    const newSections = JSON.parse(JSON.stringify(sections));
     newSections = newSections.filter((_, idx) => idx !== index);
 
     setSections(newSections);
@@ -38,25 +46,8 @@ export default function Home() {
       <Box maxWidth="650px" mx="auto">
         {sections.map((section, index) => (
           <Box key={index}>
-            {index > 0 && (
-              <Flex
-                color="brand.800"
-                alignItems="center"
-                justifyContent="space-between"
-                my="10"
-              >
-                <Divider />
-                <Text className="nowrap" fontSize="2xl" px="6">
-                  Section Break
-                </Text>
-                <Divider />
-              </Flex>
-            )}
-            <Box boxShadow="md" p="6" mb="6" rounded="md">
-              <h1>Section Name</h1>
-              <p>Description (optional)</p>
-              <p>Shuffle questions</p>
-            </Box>
+            {index > 0 && <SectionBreak />}
+            <SectionHeader />
             <Section
               questions={section.questions}
               sectionIndex={index}
@@ -66,11 +57,45 @@ export default function Home() {
           </Box>
         ))}
         <Flex justifyContent="end">
-          <Button colorScheme="brand" onClick={() => console.log(sections)}>
-            Publish
-          </Button>
+          <Button onClick={() => console.log(sections)}>Publish</Button>
         </Flex>
       </Box>
     </Box>
+  );
+}
+
+function SectionHeader() {
+  return (
+    <Box boxShadow="md" p="6" mb="10" rounded="md">
+      <Box pl="8" mb="12">
+        <Input
+          variant="unstyled"
+          size="lg"
+          fontSize="4xl"
+          placeholder="Section Name"
+        />
+        <Input variant="unstyled" placeholder="Description (optional)" />
+      </Box>
+      <Checkbox colorScheme="brand" color="brand.900">
+        Shuffle questions
+      </Checkbox>
+    </Box>
+  );
+}
+
+function SectionBreak() {
+  return (
+    <Flex
+      color="brand.800"
+      alignItems="center"
+      justifyContent="space-between"
+      my="10"
+    >
+      <Divider />
+      <Text className="nowrap" fontSize="2xl" px="6">
+        Section Break
+      </Text>
+      <Divider />
+    </Flex>
   );
 }

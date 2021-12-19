@@ -8,8 +8,6 @@ export default function QuestionsTypes({ type, handleTypeChange }) {
       onChange={(e) => handleTypeChange(e.target.value)}
       defaultValue={type}
       variant="filled"
-      colorScheme="brand"
-      bg="brand.700"
     >
       {types.map((type) => (
         <option key={type} value={type}>

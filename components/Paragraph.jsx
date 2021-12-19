@@ -1,16 +1,16 @@
-import { Box, Text, Textarea } from "@chakra-ui/react";
+import { Box, Input, Textarea } from "@chakra-ui/react";
+
+import QuestionInput from "./common/QuestionInput";
 
 export default function Paragraph() {
   return (
     <Box>
-      <Text mb="6">Question goes here</Text>
+      <QuestionInput />
       <Textarea
         width="100%"
-        height="100%"
+        height="160px"
         placeholder="Paragraph"
         variant="filled"
-        bg="brand.700"
-        colorScheme="brand"
       />
     </Box>
   );

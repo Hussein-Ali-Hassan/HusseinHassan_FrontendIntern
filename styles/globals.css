@@ -7,9 +7,11 @@
   top: 0;
   right: -65px;
 }
+
 .cusror-pointer {
   cursor: pointer;
 }
+
 .nowrap {
   white-space: nowrap;
 }

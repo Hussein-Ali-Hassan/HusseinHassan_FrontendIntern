@@ -1,15 +1,10 @@
 import { useState } from "react";
-import {
-  Flex,
-  Text,
-  Box,
-  Input,
-  InputGroup,
-  InputRightElement,
-} from "@chakra-ui/react";
-import { AddIcon, CloseIcon } from "@chakra-ui/icons";
+import { Flex, Input, InputGroup, InputRightElement } from "@chakra-ui/react";
+import { CloseIcon } from "@chakra-ui/icons";
 
 import useFormContext from "@/context/FormContext";
+import AddOption from "./common/AddOption";
+import QuestionInput from "./common/QuestionInput";
 
 const initialOptions = [
   {
@@ -28,7 +23,8 @@ export default function MultipleChoice({ sectionIndex, questionIndex }) {
   );
 
   const handleOptionsChange = (event) => {
-    const newOptions = [...options];
+    const newOptions = JSON.parse(JSON.stringify(options));
+
     if (event.target.name === "answer")
       newOptions[event.target.dataset.id][event.target.name] =
         event.target.value;
@@ -43,14 +39,14 @@ export default function MultipleChoice({ sectionIndex, questionIndex }) {
   };
 
   const addNewOption = () => {
-    const newOptions = [...options];
+    const newOptions = JSON.parse(JSON.stringify(options));
     newOptions.push({ answer: "", isCorrect: false });
 
     setOptions(newOptions);
   };
 
   const deleteOption = (index) => {
-    const newOptions = [...options];
+    const newOptions = JSON.parse(JSON.stringify(options));
     newOptions = newOptions.filter((_, idx) => idx !== index);
 
     setOptions(newOptions);
@@ -64,8 +60,7 @@ export default function MultipleChoice({ sectionIndex, questionIndex }) {
   return (
     <>
       <Flex flexDirection="column">
-        <Text mb="6">Question goes here</Text>
-
+        <QuestionInput />
         {options.map((item, index) => (
           <Flex
             key={index}
@@ -81,7 +76,7 @@ export default function MultipleChoice({ sectionIndex, questionIndex }) {
               value={item.isCorrect}
               onChange={handleOptionsChange}
             />
-            <InputGroup>
+            <InputGroup ml="4">
               <Input
                 placeholder={`Option ${index + 1}`}
                 name="answer"
@@ -90,18 +85,23 @@ export default function MultipleChoice({ sectionIndex, questionIndex }) {
                 value={item.answer}
                 onChange={handleOptionsChange}
               />
-              <InputRightElement onClick={() => deleteOption(index)}>
+              <InputRightElement
+                bg="brand.600"
+                rounded="full"
+                color="white"
+                width="24px"
+                height="24px"
+                mt="2"
+                mr="2"
+                fontSize="x-small"
+                onClick={() => deleteOption(index)}
+              >
                 <CloseIcon />
               </InputRightElement>
             </InputGroup>
           </Flex>
         ))}
-        <InputGroup>
-          <Input placeholder="Add option" />
-          <InputRightElement onClick={addNewOption}>
-            <AddIcon />
-          </InputRightElement>
-        </InputGroup>
+        <AddOption addNewOption={addNewOption} />
       </Flex>
     </>
   );
